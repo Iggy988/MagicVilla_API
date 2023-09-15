@@ -69,4 +69,25 @@ public class VillaAPIController : ControllerBase
 
         return CreatedAtRoute("GetVilla", new { id = vilaDTO.Id }, vilaDTO); 
     }
+
+    [HttpDelete("{id:int}", Name = "DeleteVilla")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public IActionResult DeleteVilla(int id)
+    {
+        if (id == 0)
+        {
+            return BadRequest();
+        }
+
+        var villa = VillaStore.villaList.FirstOrDefault(u => u.Id == id);
+        if (villa == null)
+        {
+            return NotFound();
+        }
+        VillaStore.villaList.Remove(villa);
+        //204
+        return NoContent(); //return Ok();
+    }
 }

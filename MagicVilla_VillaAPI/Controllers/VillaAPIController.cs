@@ -16,7 +16,7 @@ public class VillaAPIController : ControllerBase
         return Ok(VillaStore.villaList);
     }
 
-    [HttpGet("{id:int}")]
+    [HttpGet("{id:int}", Name = "GetVilla")]
     //[ProducesResponseType( 200, Type = typeof(VillaDTO))]
     //[ProducesResponseType( 400)]
     //[ProducesResponseType( 404)]
@@ -39,11 +39,23 @@ public class VillaAPIController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult<VillaDTO> CreateVilla([FromBody]VillaDTO vilaDTO) 
     {
+        //if (!ModelState.IsValid)
+        //{
+        //    return BadRequest(ModelState);
+        //}
+        //custom validation
+        if (VillaStore.villaList.FirstOrDefault(u => u.Name.ToLower() == vilaDTO.Name.ToLower()) != null)
+        {
+            //key moze biti prazan
+            ModelState.AddModelError("CustomError", "Villa already Exists!");
+            return BadRequest(ModelState);
+        }
+
         if (vilaDTO == null)
         {
             return BadRequest(vilaDTO);
@@ -54,6 +66,7 @@ public class VillaAPIController : ControllerBase
         }
         vilaDTO.Id = VillaStore.villaList.OrderByDescending(u => u.Id).FirstOrDefault().Id +1;
         VillaStore.villaList.Add(vilaDTO);
-        return Ok(vilaDTO); 
+
+        return CreatedAtRoute("GetVilla", new { id = vilaDTO.Id }, vilaDTO); 
     }
 }

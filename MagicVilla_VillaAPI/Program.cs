@@ -21,7 +21,7 @@ builder.Services.AddControllers(option =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<ILogging, Logging>();
+//builder.Services.AddScoped<ILogging, Logging>();
 
 var app = builder.Build();
 

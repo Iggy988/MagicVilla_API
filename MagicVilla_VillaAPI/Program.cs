@@ -18,11 +18,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddControllers(option =>
 {
     //ako format nije prihvacen -> vratice poruku za Header-Accept: application/xml (npr)
-    option.ReturnHttpNotAcceptable = true;
+    option.ReturnHttpNotAcceptable = false;
 })
     .AddNewtonsoftJson()
     .AddXmlDataContractSerializerFormatters();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

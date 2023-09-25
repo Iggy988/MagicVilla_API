@@ -14,6 +14,14 @@ public class MappingConfig : Profile
         //ReverseMap - za mappiranje reverse
         CreateMap<Villa, VillaCreateDTO>().ReverseMap();
         CreateMap<Villa, VillaUpdateDTO>().ReverseMap();
-    }
 
+
+        CreateMap<VillaNumber, VillaNumberDTO>();
+        CreateMap<VillaNumberDTO, VillaNumber>();
+
+        CreateMap<VillaNumber, VillaNumberCreateDTO>().ReverseMap();
+        CreateMap<VillaNumber, VillaNumberUpdateDTO>().ReverseMap();
+    }
 }
+
+

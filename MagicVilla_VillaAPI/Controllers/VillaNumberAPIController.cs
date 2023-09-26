@@ -19,16 +19,18 @@ public class VillaNumberAPIController : ControllerBase
 {
     protected APIResponse _response;
     private readonly IVillaNumberRepository _dbVillaNumber;
+    private readonly IVillaRepository _dbVilla;
     private readonly IMapper _mapper;
 
 
 
-    public VillaNumberAPIController(IVillaNumberRepository dbVillaNumber, IMapper mapper)
+    public VillaNumberAPIController(IVillaNumberRepository dbVillaNumber, IMapper mapper, IVillaRepository dbVilla)
     {
-        
+
         _dbVillaNumber = dbVillaNumber;
         _mapper = mapper;
         this._response = new APIResponse();
+        _dbVilla = dbVilla;
     }
 
 
@@ -98,6 +100,12 @@ public class VillaNumberAPIController : ControllerBase
             if (await _dbVillaNumber.GetAsync(u => u.VillaNo == createDTO.VillaNo) != null)
             {
                 ModelState.AddModelError("CustomError", "Villa Number already Exists!");
+                return BadRequest(ModelState);
+            }
+
+            if (await _dbVilla.GetAsync(u => u.Id == createDTO.VillaId) == null)
+            {
+                ModelState.AddModelError("CustomError", "Villa ID is invalid");
                 return BadRequest(ModelState);
             }
 
@@ -174,6 +182,12 @@ public class VillaNumberAPIController : ControllerBase
             if (updateDTO == null || id != updateDTO.VillaNo)
             {
                 return BadRequest();
+            }
+
+            if (await _dbVilla.GetAsync(u => u.Id == updateDTO.VillaId) == null)
+            {
+                ModelState.AddModelError("CustomError", "Villa ID is invalid");
+                return BadRequest(ModelState);
             }
 
             //ne trebamo da mappiramo samostalno model to dto, zato sto koristimo automapper

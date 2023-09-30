@@ -12,10 +12,10 @@ public class BaseService : IBaseService
     public APIResponse responseModel { get; set; }
     public IHttpClientFactory httpClient { get; set; }
 
-    public BaseService(IHttpClientFactory httpClientFactory)
+    public BaseService(IHttpClientFactory httpClient)
     {
         responseModel = new();
-        this.httpClient = httpClientFactory;
+        this.httpClient = httpClient;
     }
 
     public async Task<T> SendAsync<T>(APIRequest apiRequest)
@@ -54,6 +54,7 @@ public class BaseService : IBaseService
 
             var apiContent = await apiResponse.Content.ReadAsStringAsync();
             var APIResponse = JsonConvert.DeserializeObject<T>(apiContent);
+            
             return APIResponse;
         
         }

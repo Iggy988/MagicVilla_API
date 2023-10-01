@@ -23,7 +23,7 @@ public class VillaController : Controller
         List<VillaDTO> list = new();
 
         var response = await _villaService.GetAllAsync<APIResponse>();
-        //response.IsSuccess = true;
+       
         if (response != null && response.IsSuccess)
         {
             list = JsonConvert.DeserializeObject<List<VillaDTO>>(Convert.ToString(response.Result));

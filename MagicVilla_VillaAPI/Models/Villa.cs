@@ -7,6 +7,7 @@ namespace MagicVilla_VillaAPI.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // automatski povecava id
+        [Required]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Details { get; set; }

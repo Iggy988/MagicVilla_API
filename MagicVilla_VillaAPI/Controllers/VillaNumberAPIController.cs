@@ -40,7 +40,8 @@ public class VillaNumberAPIController : ControllerBase
 
         try
         {
-            IEnumerable<VillaNumber> villaNumberList = await _dbVillaNumber.GetAllAsync();
+            //mora veliko slovo Villa posto je iz VillaNumber element
+            IEnumerable<VillaNumber> villaNumberList = await _dbVillaNumber.GetAllAsync(includeProperties: "Villa"); 
             _response.Result = _mapper.Map<List<VillaNumberDTO>>(villaNumberList);
             _response.StatusCode = HttpStatusCode.OK;
       

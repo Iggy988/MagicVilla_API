@@ -54,11 +54,11 @@ public class VillaNumberController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> CreateVillaNumber(VillaNumberCreateDTO model)
+    public async Task<IActionResult> CreateVillaNumber(VillaNumberCreateVM model)
     {
         if (ModelState.IsValid)
         {
-            var response = await _villaNumberService.CreateAsync<APIResponse>(model);
+            var response = await _villaNumberService.CreateAsync<APIResponse>(model.VillaNumber);
             if (response != null && response.IsSuccess)
             {
                 return RedirectToAction(nameof(IndexVillaNumber));

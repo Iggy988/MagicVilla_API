@@ -114,7 +114,7 @@ public class VillaAPIController : ControllerBase
             if (await _dbVilla.GetAsync(u => u.Name.ToLower() == createDTO.Name.ToLower()) != null)
             {
                 //key moze biti prazan
-                ModelState.AddModelError("CustomError", "Villa already Exists!");
+                ModelState.AddModelError("ErrorMessages", "Villa already Exists!");
                 return BadRequest(ModelState);
             }
 
